@@ -7,6 +7,12 @@ class Tab < Formula
   revision 1
   head "https://github.com/austinjones/tab-rs.git"
 
+  bottle do
+    root_url "https://dl.bintray.com/austinjones/bottles-taps"
+    cellar :any_skip_relocation
+    sha256 "8a1f7b3d0afcc4890f23af91236c75ebf103cbf76d2db92b44ba44f19a8f10c1" => :catalina
+  end
+
   depends_on "rust" => :build
 
   uses_from_macos "zlib"
