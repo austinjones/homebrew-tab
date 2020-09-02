@@ -12,7 +12,7 @@ class Tab < Formula
   uses_from_macos "zlib"
 
   def install
-    system "cargo", "install", "--path", "tab/", *std_cargo_args
+    system "cargo", "install", "--path", "tab/", "--locked", "--root", prefix
 
     bash_output = Utils.safe_popen_read("#{bin}/tab", "--completion", "bash")
     (bash_completion/"tab").write bash_output
