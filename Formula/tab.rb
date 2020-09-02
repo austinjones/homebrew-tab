@@ -25,6 +25,6 @@ class Tab < Formula
   end
 
   test do
-    assert_equal "tab v0.2", shell_output("#{bin}/tab -V")
+    assert_equal "tab v0.2\n", shell_output("#{bin}/tab -V")
   end
 end
