@@ -4,7 +4,7 @@ class Tab < Formula
   url "https://github.com/austinjones/tab-rs/archive/v0.3.1.tar.gz"
   sha256 "e1d8d46d7c3490c48b3791d426d8edfbbf94314e330a3ffea7e4c5c047405932"
   license "MIT"
-  revision 1
+  revision 2
   head "https://github.com/austinjones/tab-rs.git"
 
   depends_on "rust" => :build
