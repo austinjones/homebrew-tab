@@ -10,7 +10,8 @@ class Tab < Formula
   bottle do
     root_url "https://dl.bintray.com/austinjones/bottles-taps"
     cellar :any_skip_relocation
-    sha256 "e0703724d95f86912ce683fb53f69252111d031804e9f7050ee6fd0142ea7073" => :catalina
+    rebuild 1
+    sha256 "1991eba0778e6968f762030f568176f2ae2edeb7cec47208c4e351853f8d17fc" => :catalina
   end
 
   depends_on "rust" => :build
