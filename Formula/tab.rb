@@ -7,6 +7,12 @@ class Tab < Formula
   revision 2
   head "https://github.com/austinjones/tab-rs.git"
 
+  bottle do
+    root_url "https://dl.bintray.com/austinjones/bottles-taps"
+    cellar :any_skip_relocation
+    sha256 "e0703724d95f86912ce683fb53f69252111d031804e9f7050ee6fd0142ea7073" => :catalina
+  end
+
   depends_on "rust" => :build
 
   uses_from_macos "zlib"
@@ -25,6 +31,6 @@ class Tab < Formula
   end
 
   test do
-    assert_equal "tab v0.2\n", shell_output("#{bin}/tab -V")
+    assert_equal "tab 0.3.1\n", shell_output("#{bin}/tab -V")
   end
 end
