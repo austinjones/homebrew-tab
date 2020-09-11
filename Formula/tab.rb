@@ -1,17 +1,11 @@
 class Tab < Formula
   desc "A modern terminial multiplexer designed for software & systems engineers"
   homepage "https://github.com/austinjones/tab-rs"
-  url "https://github.com/austinjones/tab-rs/archive/v0.3.0.tar.gz"
-  sha256 "fe021a7526b7c25bbd0cc577ee6c4d83498b3193e1bd9dbbc921efab71d37814"
+  url "https://github.com/austinjones/tab-rs/archive/v0.3.1.tar.gz"
+  sha256 "e1d8d46d7c3490c48b3791d426d8edfbbf94314e330a3ffea7e4c5c047405932"
   license "MIT"
   revision 1
   head "https://github.com/austinjones/tab-rs.git"
-
-  bottle do
-    root_url "https://dl.bintray.com/austinjones/bottles-taps"
-    cellar :any_skip_relocation
-    sha256 "1e96d9ee8613803c193b468dce82333c9f0718c10e911142855ca79187f4316d" => :catalina
-  end
 
   depends_on "rust" => :build
 
