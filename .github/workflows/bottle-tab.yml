@@ -29,8 +29,14 @@ jobs:
 
           brew install jq
 
+      - name: Env | Author
+        working-directory: ${{env.TAP_DIR}}
+        run: |
+          AUTHOR=$(git log -1 --pretty=format:'%an')
+          echo "::set-env name=AUTHOR::$AUTHOR"
+
       - name: Setup | Cancel if author is Github Actions
-        if: ${{ github.event.pusher.name == 'Github Actions' }}
+        if: env.AUTHOR == 'Github Actions'
         uses: andymckay/cancel-action@0.2
 
       - name: Env | Formula
