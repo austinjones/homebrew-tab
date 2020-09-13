@@ -4,7 +4,7 @@ class Tab < Formula
   url "https://github.com/austinjones/tab-rs/archive/v0.3.2.tar.gz"
   sha256 "4b988a23189213ed4826236faee2c9b893ba947a062ce92e965b43d78bae7c88"
   license "MIT"
-  revision 37
+  revision 38
   head "https://github.com/austinjones/tab-rs.git"
 
   bottle do
