@@ -1,0 +1,44 @@
+name: Publish Bottles
+
+on: 
+  push:
+    paths:
+      - "Formula/tab.rb"
+
+    branches:    
+      - master
+
+jobs:
+  tab:
+    name: tab
+    runs-on: macOS-latest
+    steps:
+      - name: Setup
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
+        run: |
+          brew tap austinjones/taps
+          cd /usr/local/Homebrew/Library/Taps/austinjones/homebrew-taps
+          git remote set-url origin "https://$GITHUB_TOKEN@github.com/mxcl/homebrew-made.git"
+          git config user.name "Bottle Bot"
+          git config user.email "implAustin+bottlebot@gmail.com"
+        
+      - name: Bottle
+        run: |
+          FORMULA=./Formula/tab.rb
+          ARCHIVE=$(grep "url \"" ./Formula/tab.rb | sed -E 's/\s*url \"//g' | sed 's/\"//g' | head -n 1 | rev | cut -d '/' -f 1 | rev)
+          TAG=$(echo $ARCHIVE | sed 's/.tar.gz//')
+          brew install --build-bottle ./Formula/tab.rb
+          brew bottle --json --root-url=https://github.com/austinjones/tab-rs/releases/download/$TAG $FORMULA
+          brew bottle --merge tab--*.json --write --no-commit
+          BOTTLE_FILE=$(ls tab-*.tar.gz)
+
+          curl --data-binary @"$BOTTLE_FILE" \
+            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$TAG/assets?name=$BOTTLE-FILE" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/octet-stream"
+          
+          git add $FORMULA
+          git commit -m "Build bottle for tab $TAG: $BOTTLE_FILE"
+          git push origin master
