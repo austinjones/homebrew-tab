@@ -2,7 +2,7 @@ class Tab < Formula
   desc "A modern terminial multiplexer designed for software & systems engineers"
   homepage "https://github.com/austinjones/tab-rs"
   url "https://github.com/austinjones/tab-rs/archive/v0.3.2.tar.gz"
-  sha256 "0f403efa5b800bc1ea7613417f864e1a77b016027659d5c043101f86c8c962d9"
+  sha256 "4b988a23189213ed4826236faee2c9b893ba947a062ce92e965b43d78bae7c88"
   license "MIT"
   revision 3
   head "https://github.com/austinjones/tab-rs.git"
@@ -25,6 +25,6 @@ class Tab < Formula
   end
 
   test do
-    assert_equal "tab 0.3.1\n", shell_output("#{bin}/tab -V")
+    assert_equal "tab 0.3.2\n", shell_output("#{bin}/tab -V")
   end
 end
