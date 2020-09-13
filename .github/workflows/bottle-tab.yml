@@ -37,7 +37,7 @@ jobs:
           FORMULA=./Formula/tab.rb
           ARCHIVE=$(grep "url \"" ./Formula/tab.rb | sed -E 's/\s*url \"//g' | sed 's/\"//g' | head -n 1 | rev | cut -d '/' -f 1 | rev)
           TAG=$(echo $ARCHIVE | sed 's/.tar.gz//')
-          RELEASE_ID=$(https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG} | jq .id)
+          RELEASE_ID=$(curl https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG} | jq .id)
 
           curl --data-binary @"README.md" \
             "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=test-readme.md" \
