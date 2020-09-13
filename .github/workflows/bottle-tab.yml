@@ -82,7 +82,7 @@ jobs:
       - name: Env | Local Filename
         working-directory: ${{env.TAP_DIR}}
         run: |
-          LOCAL_FILE=$(cat tab-*.bottle.json | jq --raw-output '.["austinjones/taps/tab"].bottle.tags[].filename')
+          LOCAL_FILE=$(cat tab-*.bottle.json | jq --raw-output '.["austinjones/taps/tab"].bottle.tags[].local_filename')
           echo "::set-env name=LOCAL_FILE::$LOCAL_FILE"
 
       - name: Env | Publish File
