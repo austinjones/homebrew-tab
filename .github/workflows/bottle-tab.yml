@@ -40,7 +40,7 @@ jobs:
           RELEASE_ID=$(https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG} | jq .id)
 
           curl --data-binary @"README.md" \
-            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$TAG/assets?name=test-readme.md" \
+            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=test-readme.md" \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/octet-stream"
           
