@@ -12,7 +12,6 @@ jobs:
   tab:
     name: tab
     runs-on: macOS-latest
-    # runs-on: ubuntu-latest
     env:
       TAP_DIR: /usr/local/Homebrew/Library/Taps/austinjones/homebrew-taps
     steps:
@@ -25,10 +24,28 @@ jobs:
           cd $TAP_DIR
 
           git remote set-url origin "https://austinjones:${GITHUB_TOKEN}@github.com/austinjones/homebrew-taps.git"
-          git config user.name "Github Actions/Publish Tab"
+          git config user.name "Github Actions"
           git config user.email "implAustin+bottlebot@gmail.com"
 
           brew install jq
+
+      - name: Setup | Check Author
+        working-directory: ${{env.TAP_DIR}}
+        run: |
+          AUTHOR=$(git log -1 --pretty=format:'%an')
+          if [ "$AUTHOR" == "Github Actions" ]; then
+            echo "::set-env name=BOT_AUTHOR::1"
+          fi
+
+      - name: Setup | Cancel if author is Github Actions
+        if: ${{env.BOT_AUTHOR}} == 1
+        uses: andymckay/cancel-action@0.2
+
+      - name: Env | Formula
+        working-directory: ${{env.TAP_DIR}}
+        run: |
+          FORMULA="./Formula/tab.rb"
+          echo "::set-env name=FORMULA::$FORMULA"
 
       - name: Env | Archive
         working-directory: ${{env.TAP_DIR}}
@@ -55,7 +72,7 @@ jobs:
 
         run: |
           echo "Building bottle for tag ${TAG}..."
-          brew install --build-bottle ./Formula/tab.rb
+          brew install --build-bottle $FORMULA
 
       - name: Bottle | Package
         working-directory: ${{env.TAP_DIR}}
@@ -83,8 +100,6 @@ jobs:
 
       - name: Bottle | Commit & Publish
         working-directory: ${{env.TAP_DIR}}
-        env:
-          GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
         run: |
           git add $FORMULA
           git commit -m "Build bottle for tab $TAG: $BOTTLE_FILE"
