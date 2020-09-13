@@ -21,7 +21,7 @@ jobs:
         run: |
           brew tap austinjones/taps
           cd /usr/local/Homebrew/Library/Taps/austinjones/homebrew-taps
-          git remote set-url origin "https://austinjones:${GITHUB_TOKEN}@github.com/austinjones/homebrew-taps.git"
+          git remote set-url origin "https://${GITHUB_TOKEN}@github.com/austinjones/homebrew-taps.git"
           git config user.name "Github Actions/Publish Tab"
           git config user.email "implAustin+bottlebot@gmail.com"
           git push
@@ -29,7 +29,7 @@ jobs:
       - name: Bottle
         env:
           GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
-          
+
         run: |
           cd /usr/local/Homebrew/Library/Taps/austinjones/homebrew-taps
 
