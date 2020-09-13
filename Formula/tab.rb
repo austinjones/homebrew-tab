@@ -10,8 +10,7 @@ class Tab < Formula
   bottle do
     root_url "https://github.com/austinjones/tab-rs/releases/download/v0.3.2"
     cellar :any_skip_relocation
-    rebuild 1
-    sha256 "b72a196a7821f95d2650f29342a3ab164a1f6622f184e8ef091bf0cf36b4781c" => :catalina
+    sha256 "72d7cdb926b1bb53c9245fc9ab9b39a6bda9d1291d05df87de960ad1192b2c46" => :catalina
   end
 
   depends_on "rust" => :build
