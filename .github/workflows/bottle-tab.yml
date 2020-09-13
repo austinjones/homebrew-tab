@@ -69,6 +69,11 @@ jobs:
           GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
 
         run: |
+          curl --data-binary @"README.md" \
+            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=test-readme.md" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/octet-stream"
+          
           echo "Building bottle for tag ${TAG}..."
           brew install --build-bottle $FORMULA
 
