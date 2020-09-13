@@ -79,21 +79,27 @@ jobs:
           brew bottle --json --root-url=https://github.com/austinjones/tab-rs/releases/download/$TAG $FORMULA
           brew bottle --merge tab--*.json --write --no-commit
 
-      - name: Env | Bottle File
+      - name: Env | Local Filename
         working-directory: ${{env.TAP_DIR}}
         run: |
-          BOTTLE_FILE=$(ls -1 tab-*.tar.gz | head -n 1)
-          echo "::set-env name=BOTTLE_FILE::$BOTTLE_FILE"
+          LOCAL_FILE=$(cat tab-*.bottle.json | jq --raw-output '.["austinjones/taps/tab"].bottle.tags[].filename')
+          echo "::set-env name=LOCAL_FILE::$LOCAL_FILE"
+
+      - name: Env | Publish File
+        working-directory: ${{env.TAP_DIR}}
+        run: |
+          PUBLISH_FILE=$(cat tab-*.bottle.json | jq --raw-output '.["austinjones/taps/tab"].bottle.tags[].filename')
+          echo "::set-env name=PUBLISH_FILE::$PUBLISH_FILE"
 
       - name: Bottle | Upload
         working-directory: ${{env.TAP_DIR}}
         env:
           GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
         run: |
-          echo "Uploading bottle file $BOTTLE_FILE to $TAG artifacts..."
+          echo "Uploading bottle file $PUBLISH_FILE to $TAG artifacts..."
 
-          curl --fail --data-binary @"$BOTTLE_FILE" \
-            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=$BOTTLE_FILE" \
+          curl --fail --data-binary @"$LOCAL_FILE" \
+            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=$PUBLISH_FILE" \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/octet-stream"
 
@@ -101,7 +107,7 @@ jobs:
         working-directory: ${{env.TAP_DIR}}
         run: |
           git add $FORMULA
-          git commit -m "Build bottle for tab $TAG: $BOTTLE_FILE"
+          git commit -m "Build bottle for tab $TAG: $PUBLISH_FILE"
           git push origin master
 
-          echo "Bottle published at url https://github.com/austinjones/tab-rs/releases/download/$TAG/$BOTTLE_FILE"
+          echo "Bottle published at url https://github.com/austinjones/tab-rs/releases/download/$TAG/$PUBLISH_FILE"
