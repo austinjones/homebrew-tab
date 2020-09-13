@@ -25,7 +25,7 @@ jobs:
           git config user.name "Github Actions/Publish Tab"
           git config user.email "implAustin+bottlebot@gmail.com"
 
-          sudo apt install -y jq
+          brew install jq
         
       - name: Bottle
         env:
