@@ -60,7 +60,8 @@ jobs:
       - name: Env | Release ID
         working-directory: ${{env.TAP_DIR}}
         run: |
-          RELEASE_ID=$(curl https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG} | jq .id)
+          URL="https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG}"
+          RELEASE_ID=$(curl $URL | jq .id)
           echo "::set-env name=RELEASE_ID::$RELEASE_ID"
 
       - name: Bottle | Build
