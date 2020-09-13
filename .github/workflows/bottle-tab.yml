@@ -12,6 +12,7 @@ jobs:
   tab:
     name: tab
     runs-on: macOS-latest
+    # runs-on: ubuntu-latest
     steps:
       - name: Setup
         env:
