@@ -61,7 +61,7 @@ jobs:
         working-directory: ${{env.TAP_DIR}}
         run: |
           URL="https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG}"
-          RELEASE_ID=$(curl $URL | jq .id)
+          RELEASE_ID=$(curl --fail $URL | jq .id)
           echo "::set-env name=RELEASE_ID::$RELEASE_ID"
 
       - name: Bottle | Build
@@ -70,11 +70,6 @@ jobs:
           GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
 
         run: |
-          curl --data-binary @"README.md" \
-            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=test-readme.md" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Content-Type: application/octet-stream"
-          
           echo "Building bottle for tag ${TAG}..."
           brew install --build-bottle $FORMULA
 
@@ -87,7 +82,7 @@ jobs:
       - name: Env | Bottle File
         working-directory: ${{env.TAP_DIR}}
         run: |
-          BOTTLE_FILE=$(ls tab-*.tar.gz)
+          BOTTLE_FILE=$(ls -1 tab-*.tar.gz | head -n 1)
           echo "::set-env name=BOTTLE_FILE::$BOTTLE_FILE"
 
       - name: Bottle | Upload
@@ -95,9 +90,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
         run: |
-          echo "Uploading bottle file $BOTTLE_FILE to the $TAG artifacts..."
+          echo "Uploading bottle file $BOTTLE_FILE to $TAG artifacts..."
 
-          curl --data-binary @"$BOTTLE_FILE" \
+          curl --fail --data-binary @"$BOTTLE_FILE" \
             "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=$BOTTLE_FILE" \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/octet-stream"
