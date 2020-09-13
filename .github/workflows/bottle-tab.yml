@@ -1,4 +1,4 @@
-name: Publish Bottles
+name: Publish Tab
 
 on: 
   push:
@@ -26,10 +26,12 @@ jobs:
         
       - name: Bottle
         run: |
+          cd /usr/local/Homebrew/Library/Taps/austinjones/homebrew-taps
+
           FORMULA=./Formula/tab.rb
           ARCHIVE=$(grep "url \"" ./Formula/tab.rb | sed -E 's/\s*url \"//g' | sed 's/\"//g' | head -n 1 | rev | cut -d '/' -f 1 | rev)
           TAG=$(echo $ARCHIVE | sed 's/.tar.gz//')
-          cd /usr/local/Homebrew/Library/Taps/austinjones/homebrew-taps
+          
           brew install --build-bottle ./Formula/tab.rb
           brew bottle --json --root-url=https://github.com/austinjones/tab-rs/releases/download/$TAG $FORMULA
           brew bottle --merge tab--*.json --write --no-commit
