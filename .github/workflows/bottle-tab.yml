@@ -92,7 +92,7 @@ jobs:
           echo "Uploading bottle file $BOTTLE_FILE to the $TAG artifacts..."
 
           curl --data-binary @"$BOTTLE_FILE" \
-            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=$BOTTLE-FILE" \
+            "https://uploads.github.com/repos/austinjones/tab-rs/releases/$RELEASE_ID/assets?name=$BOTTLE_FILE" \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/octet-stream"
 
