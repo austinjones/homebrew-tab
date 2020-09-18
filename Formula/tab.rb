@@ -6,6 +6,12 @@ class Tab < Formula
   license "MIT"
   head "https://github.com/austinjones/tab-rs.git"
 
+  bottle do
+    root_url "https://github.com/austinjones/tab-rs/releases/download/v0.3.6"
+    cellar :any_skip_relocation
+    sha256 "fe5784f2afadc5ef389a64a1aa7f127ff5961034c1297ea7e6c3656c02d75c61" => :catalina
+  end
+
   depends_on "rust" => :build
 
   uses_from_macos "zlib"
