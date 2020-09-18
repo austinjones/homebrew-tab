@@ -4,14 +4,7 @@ class Tab < Formula
   url "https://github.com/austinjones/tab-rs/archive/v0.3.6.tar.gz"
   sha256 "759c85cd51c5dc76f23ca443e646a375fa4c9830acb385a8f48023f4da059938"
   license "MIT"
-  revision 2
   head "https://github.com/austinjones/tab-rs.git"
-
-  bottle do
-    root_url "https://github.com/austinjones/tab-rs/releases/download/v0.3.6"
-    cellar :any_skip_relocation
-    sha256 "0b7a9faf2de6a20b58f4fc728bfa869c8fe01461ce12f0ef28086354cb1be395" => :catalina
-  end
 
   depends_on "rust" => :build
 
