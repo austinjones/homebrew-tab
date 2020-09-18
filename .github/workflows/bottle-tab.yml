@@ -59,9 +59,11 @@ jobs:
 
       - name: Env | Release ID
         working-directory: ${{env.TAP_DIR}}
+        env:
+          GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_TOKEN}}
         run: |
           URL="https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG}"
-          RELEASE_ID=$(curl --fail $URL | jq .id)
+          RELEASE_ID=$(curl --fail $URL -H "Authorization: token $GITHUB_TOKEN" | jq .id)
           echo "::set-env name=RELEASE_ID::$RELEASE_ID"
 
       - name: Bottle | Build
