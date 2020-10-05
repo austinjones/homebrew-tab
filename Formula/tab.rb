@@ -7,9 +7,10 @@ class Tab < Formula
   head "https://github.com/austinjones/tab-rs.git"
 
   bottle do
-    root_url "https://github.com/austinjones/tab-rs/releases/download/v0.3.8"
+    root_url "https://github.com/austinjones/tab-rs/releases/download/v0.3.9"
     cellar :any_skip_relocation
-    sha256 "03b496cbf7f62b8047e52fca9a362bd51175327a301fa6eced44c0bb209664ee" => :catalina
+    rebuild 1
+    sha256 "9d52b8e9b48444f46704bca7c688fcb9dce2e9027bed71dd0641350cb4432dd4" => :catalina
   end
 
   depends_on "rust" => :build
