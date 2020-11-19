@@ -33,7 +33,7 @@ jobs:
         working-directory: ${{env.TAP_DIR}}
         run: |
           AUTHOR=$(git log -1 --pretty=format:'%an')
-          echo "::set-env name=AUTHOR::$AUTHOR"
+          echo "AUTHOR=$AUTHOR" >> $GITHUB_ENV
 
       - name: Setup | Cancel if author is Github Actions
         if: env.AUTHOR == 'Github Actions'
@@ -43,19 +43,19 @@ jobs:
         working-directory: ${{env.TAP_DIR}}
         run: |
           FORMULA="./Formula/tab.rb"
-          echo "::set-env name=FORMULA::$FORMULA"
+          echo "FORMULA=$FORMULA" >> $GITHUB_ENV
 
       - name: Env | Archive
         working-directory: ${{env.TAP_DIR}}
         run: |
           ARCHIVE=$(grep "url \"" ./Formula/tab.rb | sed -E 's/\s*url \"//g' | sed 's/\"//g' | head -n 1 | rev | cut -d '/' -f 1 | rev)
-          echo "::set-env name=ARCHIVE::$ARCHIVE"
+          echo "ARCHIVE=$ARCHIVE" >> $GITHUB_ENV
 
       - name: Env | Tag
         working-directory: ${{env.TAP_DIR}}
         run: |
           TAG=$(echo $ARCHIVE | sed 's/.tar.gz//')
-          echo "::set-env name=TAG::$TAG"
+          echo "TAG=$TAG" >> $GITHUB_ENV
 
       - name: Env | Release ID
         working-directory: ${{env.TAP_DIR}}
@@ -64,7 +64,7 @@ jobs:
         run: |
           URL="https://api.github.com/repos/austinjones/tab-rs/releases/tags/${TAG}"
           RELEASE_ID=$(curl --fail $URL -H "Authorization: token $GITHUB_TOKEN" | jq .id)
-          echo "::set-env name=RELEASE_ID::$RELEASE_ID"
+          echo "RELEASE_ID=$RELEASE_ID" >> $GITHUB_ENV
 
       - name: Bottle | Build
         working-directory: ${{env.TAP_DIR}}
@@ -85,13 +85,13 @@ jobs:
         working-directory: ${{env.TAP_DIR}}
         run: |
           LOCAL_FILE=$(cat tab-*.bottle.json | jq --raw-output '.["austinjones/taps/tab"].bottle.tags[].local_filename')
-          echo "::set-env name=LOCAL_FILE::$LOCAL_FILE"
+          echo "LOCAL_FILE=$LOCAL_FILE" >> $GITHUB_ENV
 
       - name: Env | Publish File
         working-directory: ${{env.TAP_DIR}}
         run: |
           PUBLISH_FILE=$(cat tab-*.bottle.json | jq --raw-output '.["austinjones/taps/tab"].bottle.tags[].filename')
-          echo "::set-env name=PUBLISH_FILE::$PUBLISH_FILE"
+          echo "PUBLISH_FILE=$PUBLISH_FILE" >> $GITHUB_ENV
 
       - name: Bottle | Upload
         working-directory: ${{env.TAP_DIR}}
