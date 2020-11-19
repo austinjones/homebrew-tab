@@ -5,6 +5,7 @@ class Tab < Formula
   sha256 "47a2b027b8f964a80d4f774d5f85294ecd8eb945084a2ef3022d8ba2fd1b58f1"
   license "MIT"
   head "https://github.com/austinjones/tab-rs.git"
+  # rebuild
 
   bottle do
     root_url "https://github.com/austinjones/tab-rs/releases/download/v0.5.0"
