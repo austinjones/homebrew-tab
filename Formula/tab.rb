@@ -1,8 +1,8 @@
 class Tab < Formula
   desc "The intuitive, config-driven terminal multiplexer designed for software & systems engineers"
   homepage "https://github.com/austinjones/tab-rs"
-  url "https://github.com/austinjones/tab-rs/archive/v0.5.5.tar.gz"
-  sha256 "07cb97cfa0b43c20a56601fae14f98d6319559624ce6ee934d7aa5d38a786f0a"
+  url "https://github.com/austinjones/tab-rs/archive/v0.5.6.tar.gz"
+  sha256 "5c13061f5f7ad73346749211e4719072caff2b709c766623fc62a43a07c05f90"
   license "MIT"
   head "https://github.com/austinjones/tab-rs.git"
   # rebuild
